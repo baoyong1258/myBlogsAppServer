@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
-var sidebarData = require('./data/sidebar.json');
+var data = require('./data/data.json');
+var sidebarDataList = require('./data/sidebarDataList.json');
 
 app.all('*', (req, res, next) => {
     res.header("Access-Control-Allow-Origin", req.headers.origin || '*');
@@ -16,7 +17,10 @@ app.all('*', (req, res, next) => {
 });
 
 app.get('/getData', function (req, res) {
-    res.json(sidebarData);
+    res.json(data);
+});
+app.get('/getSidebarList', function (req, res) {
+    res.json(sidebarDataList);
 });
 
 var server = app.listen(8088, function () {
