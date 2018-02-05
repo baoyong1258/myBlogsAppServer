@@ -23,7 +23,7 @@ app.get('/getSidebarList', function (req, res) {
     res.json(sidebarDataList);
 });
 
-var server = app.listen(8088, function () {
+var server = app.listen(8090, function () {
     var host = server.address().address;
     var port = server.address().port;
 
