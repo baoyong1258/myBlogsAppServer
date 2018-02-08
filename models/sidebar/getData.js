@@ -2,6 +2,7 @@
 
 import mongoose from 'mongoose'
 import sidebarData from '../../initData/sidebar'
+import db from '../../mongodb/db';
 
 const Schema = new mongoose.Schema({
     title: String,
@@ -14,24 +15,30 @@ const Schema = new mongoose.Schema({
         },
     ],
     open: Boolean
-});
+},{versionKey: false});
 
 Schema.statics.addSidebarData = async function (newSidebarData) {
     try{
-        let obj = {
-                title: "child",
-                children: [
-                    {
-                        title: "index",
-                        children: [],
-                        url: "/child",
-                        as: "/child"
-                    },
-                ],
-                open: false
-            };
-        let result = await this.insert(obj);
-        return
+        var sam = new Model({
+            title: "child",
+            children: [
+                {
+                    title: "demo",
+                    children: [],
+                    url: "/child?type=child&children=demo",
+                    as: "/child/demo"
+                }
+            ],
+            open: false
+        })
+        sam.save(function (err) {
+            if(err){
+                console.log('保存sidebar数据失败')
+            }else{
+                console.log('保存sidebar数据成功')
+            }
+        });
+        return;
     }catch(err){
         console.log('保存cetegroy失败');
         throw new Error(err)
