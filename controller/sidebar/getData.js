@@ -48,6 +48,25 @@ class SideBar {
             }
         })
     }
+    async removeData(req, res, next){
+        const form = new formidable.IncomingForm();
+        form.parse(req, async(err, fields, files) => {
+            const title = fields.title;
+            try {
+                console.log(title);
+                let result = await sidebarModel.removeSidebarData(title);
+                res.send({
+                    code: '0000',
+                    message: '删除数据成功'
+                })
+            }catch(err){
+                res.send({
+                    type: 'ERROR_DATA',
+                    message: '删除数据失败'
+                })
+            }
+        })
+    }
 }
 
 export default new SideBar();

@@ -45,6 +45,20 @@ Schema.statics.addSidebarData = async function (newSidebarData) {
     }
 }
 
+Schema.statics.removeSidebarData = async function (title) {
+    console.log('title = ' + title);
+    try{
+        this.remove({title: title}, function (err) {
+            console.log('删除title:' + title);
+        });
+        return;
+    }catch(err){
+        console.log('删除数据失败');
+        throw new Error(err)
+    }
+}
+
+
 const Model = mongoose.model('Sidebar4', Schema);
 
 Model.findOne((err, data) => {
