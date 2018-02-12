@@ -19,18 +19,8 @@ const Schema = new mongoose.Schema({
 
 Schema.statics.addSidebarData = async function (newSidebarData) {
     try{
-        var sam = new Model({
-            title: "child",
-            children: [
-                {
-                    title: "demo",
-                    children: [],
-                    url: "/child?type=child&children=demo",
-                    as: "/child/demo"
-                }
-            ],
-            open: false
-        })
+        let data = Object.assign({}, JSON.parse(newSidebarData), {open: false});
+        var sam = new Model(data);
         sam.save(function (err) {
             if(err){
                 console.log('保存sidebar数据失败')
@@ -55,6 +45,19 @@ Schema.statics.removeSidebarData = async function (title) {
     }catch(err){
         console.log('删除数据失败');
         throw new Error(err)
+    }
+}
+
+Schema.statics.updateSidebarData = async function (updateData) {
+    try{
+        const data = JSON.parse(updateData);
+        const title = data.title;
+        const children = data.children;
+        this.update({title}, {children}, function (err) {
+            console.log('更新数据成功');
+        })
+    }catch(err){
+        console.log('更新数据失败');
     }
 }
 

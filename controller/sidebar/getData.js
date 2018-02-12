@@ -33,7 +33,7 @@ class SideBar {
                 console.log(newSidebarData);
                 console.log('--- newSidebarData JSON ---');
                 console.log(JSON.parse(newSidebarData));
-                let result = await sidebarModel.addSidebarData(JSON.parse(newSidebarData));
+                let result = await sidebarModel.addSidebarData(newSidebarData);
                 res.send({
                     code: '0000',
                     message: '保存数据成功'
@@ -63,6 +63,24 @@ class SideBar {
                 res.send({
                     type: 'ERROR_DATA',
                     message: '删除数据失败'
+                })
+            }
+        })
+    }
+    async updateData(req, res, next){
+        const form = new formidable.IncomingForm();
+        form.parse(req, async(err, fields, files) => {
+            const updateData = fields.updateData;
+            try {
+                let result = await sidebarModel.updateSidebarData(updateData);
+                res.send({
+                    code: '0000',
+                    message: '更新数据成功'
+                })
+            }catch(err){
+                res.send({
+                    type: 'ERROR_DATA',
+                    message: '更新数据失败'
                 })
             }
         })
